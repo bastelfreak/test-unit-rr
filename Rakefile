@@ -20,7 +20,6 @@ task :default => :test
 
 require "rubygems"
 require "bundler/gem_helper"
-require "packnga"
 
 base_dir = File.join(File.dirname(__FILE__))
 html_base_dir = File.join(base_dir, "doc", "html")
@@ -31,21 +30,6 @@ def helper.version_tag
 end
 helper.install
 spec = helper.gemspec
-
-Packnga::DocumentTask.new(spec) do |task|
-  task.original_language = "en"
-  task.translate_languages = ["ja"]
-end
-
-Packnga::ReleaseTask.new(spec) do |task|
-  test_unit_github_io_dir_candidates = [
-    "../../www/test-unit.github.io",
-  ]
-  test_unit_github_io_dir = test_unit_github_io_dir_candidates.find do |dir|
-    File.directory?(dir)
-  end
-  task.index_html_dir = test_unit_github_io_dir
-end
 
 desc "Run tests"
 task :test do
